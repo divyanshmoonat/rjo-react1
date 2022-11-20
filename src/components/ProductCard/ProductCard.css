@@ -25,3 +25,8 @@
 .product-card .category {
     /* padding: ; */
 }
+
+.product-card .cta button{
+    width: 50px;
+    margin: 5px 20px;
+}
