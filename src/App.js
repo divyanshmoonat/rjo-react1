@@ -1,14 +1,49 @@
 import "./App.css";
+import {
+  createBrowserRouter,
+  BrowserRouter,
+  Routes,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./container/Home/Home";
+import ContactUs from "./container/ContactUs/ContactUs";
+import AboutUs from "./container/AboutUs/AboutUs";
+import NotFound from "./container/NotFound/NotFound";
+import Register from "./container/Register/Register";
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Home />,
+//   },
+//   {
+//     path: "/contact-us",
+//     element: <ContactUs />,
+//   },
+//   {
+//     path: "/about-us",
+//     element: <AboutUs />,
+//   },
+// ]);
 
 const App = (props) => {
   return (
     <div className="App">
-      <Header />
-        <Home />
-      <Footer />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+      {/* <RouterProvider router={router} /> */}
     </div>
   );
 };

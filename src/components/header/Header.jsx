@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
 	constructor() {
@@ -12,12 +13,20 @@ class Header extends React.Component {
       <header>
         <nav className="nav-bar">
           <div>
-            <a>Home</a>
-            <a>Contact Us</a>
-            <a>About Us</a>
+            {/* CLIENT SIDE REACT ROUTING */}
+            <Link to="/">Home</Link>
+            <Link to="/contact-us">Contact Us</Link>
+            <Link to="/about-us">About Us</Link>
+
+            {/* BELOW IS DEFAULT HTML ROUTNIG */}
+            {/* <a href="/">Home</a>
+            <a href="/contact-us">Contact Us</a>
+            <a href="/about-us">About Us</a> */}
           </div>
           <div>
-            <a>Login</a>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+            {/* <a>Login</a> */}
           </div>
         </nav>
       </header>
