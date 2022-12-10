@@ -1,46 +1,60 @@
 import React from "react";
+import axios from "axios";
+
 import ProductCard from "../../components/ProductCard/ProductCard";
+import LoaderImage from "../../assets/images/loader.gif";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 import "./Home.css";
 
-const productsList = [
-  {
-    image:
-      "https://rukminim1.flixcart.com/image/200/200/kx50gi80/pen/h/z/k/119766-flair-original-imag9nzubznagufg.jpeg?q=70",
-    title: "Box of Pencils",
-    price: 100,
-    tags: "Pens, Notebooks & More",
-  },
-  {
-    image:
-      "https://rukminim1.flixcart.com/image/200/200/jlph9jk0/cycle/h/f/k/skyper-26t-sskp26bk0001-16-hero-original-imaf8ru5xysfgtmx.jpeg?q=70",
-    title: "Cycle",
-    price: 10000,
-    tags: "Vehicles, bikes",
-  },
-  {
-    image:
-      "https://rukminim1.flixcart.com/image/200/200/krayqa80/book/k/b/b/guide-to-uttar-pradesh-up-nirikshak-platoon-commander-upsi-exam-original-imag54mwhwxgj6pj.jpeg?q=70",
-    title: "Book",
-    price: 200,
-    tags: "Study, books",
-  },
-  {
-    image:
-      "https://rukminim1.flixcart.com/image/200/200/light/h/9/h/imported-bicycle-rear-light-5-led-usb-rechargeable-waterproof-original-imaeq7hj3gppgcxz.jpeg?q=70",
-    title: "Cycle Lights",
-    price: 500,
-    tags: "Accessories, Vehicles",
-  },
-];
-class Home extends React.Component {
+const carouselSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 5,
+  slidesToScroll: 1,
+  arrows: true,
+  autoplay: false,
+};
+class Home extends React.PureComponent {
   constructor() {
     super();
     this.state = {
       currentProductIndex: 0,
-      productDetails: productsList,
+      productsList: [],
+      productLlistCopy: [],
       cartItems: 0,
+      showLoader: false,
     };
+  }
+
+  componentDidMount() {
+    this.setState({ showLoader: true });
+    // fetch("https://fakestoreapi.com/products", { method: "GET" })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        console.log(response.data);
+        this.setState({
+          productsList: response.data,
+          productLlistCopy: response.data,
+          showLoader: false,
+        });
+      })
+      .catch((error) => {
+        this.setState({ showLoader: false });
+        console.log(error);
+        // alert(error.message);
+      });
+    // setTimeout(() => {
+    //   console.log("Updating state value now");
+    //   this.setState({ cartItems: 0 });
+    // }, 10000);
   }
 
   onPreviousClick = () => {
@@ -61,16 +75,43 @@ class Home extends React.Component {
 
   onSearchValueChange = (e) => {
     const searchKey = e.target.value;
-    const filteredList = productsList.filter((product) =>
+    if (searchKey == "") {
+      this.setState({ productsList: this.state.productLlistCopy });
+      return;
+    }
+    const filteredList = this.state.productsList.filter((product) =>
       product.title.toLowerCase().includes(searchKey.toLowerCase())
     );
-    this.setState({ productDetails: filteredList });
+    this.setState({ productsList: filteredList });
   };
 
   render() {
-    const productDetails = this.state.productDetails;
+    console.log("Hello from render method");
+    const productsList = this.state.productsList;
     return (
-      <main>
+      <main className="home">
+        <section className="carousel-container">
+          {/* <Slider {...carouselSettings}>
+            {productsList.map((product) => {
+              return (
+                <ProductCard
+                  key={product.title}
+                  product={product}
+                  onQtyUpdate={this.onQtyUpdate}
+                />
+              );
+            })}
+            {productsList.map((product) => {
+              return (
+                <ProductCard
+                  key={product.title}
+                  product={product}
+                  onQtyUpdate={this.onQtyUpdate}
+                />
+              );
+            })}
+          </Slider> */}
+        </section>
         <section className="cart">
           Items in Cart : {this.state.cartItems}
         </section>
@@ -88,9 +129,11 @@ class Home extends React.Component {
           <button onClick={this.onNextClick}>Next</button>
           <div className="products-container">
             {/* <ProductCard
-              product={productDetails[this.state.currentProductIndex]}
+              product={productsList[this.state.currentProductIndex]}
             /> */}
-            {productDetails.map((product) => {
+            {this.state.showLoader && <img src={LoaderImage} alt="Loader" />}
+
+            {productsList.map((product) => {
               return (
                 <ProductCard
                   key={product.title}

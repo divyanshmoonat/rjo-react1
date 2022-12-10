@@ -14,49 +14,23 @@ class ProductCard extends React.Component {
     // this.qty = 0;
   }
 
-  onQtyDecrease = () => {
-    // this.qty = this.qty - 1;
-    // this.forceUpdate();
-    // this.state.qty = this.state.qty - 1; // Wrong update
-    this.setState(
-      { qty: this.state.qty - 1, availableQty: this.state.availableQty + 1 },
-      () => {
-        const isOutOfStock = this.state.availableQty === 0 ? true : false;
-        this.setState({ isOutOfStock: isOutOfStock });
-      }
-    );
-    this.props.onQtyUpdate("DEC");
-    // console.log("Quantity decreased");
-  };
+  onQtyChange = (type) => {
+    let qty = this.state.qty;
+    let availableQty = this.state.availableQty;
+    if (type === "INC") {
+      qty++;
+      availableQty--;
+    } else if (type === "DEC") {
+      qty--;
+      availableQty++;
+    }
 
-  onQtyIncrease = () => {
-    // this.qty = this.qty + 1;
-    // this.state.qty = this.state.qty + 1;// Wrong update
-
-    this.setState(
-      (prevState) => ({
-        qty: prevState.qty + 1,
-        availableQty: prevState.availableQty - 1,
-      }),
-      () => {
-        this.setState((prevState) => ({
-          isOutOfStock: prevState.availableQty === 0,
-        }));
-      }
-    );
-
-    // this.setState(
-    //   {
-    //     qty: this.state.qty + 1,
-    //     availableQty: this.state.availableQty - 1,
-    //   },
-    //   () => {
-    //     const isOutOfStock = this.state.availableQty === 0 ? true : false;
-    //     this.setState({ isOutOfStock });
-    //   }
-    // );
-    this.props.onQtyUpdate("INC");
-    // console.log("Quantity Increased");
+    this.setState({ qty: qty, availableQty: availableQty }, () => {
+      this.setState((prevState) => ({
+        isOutOfStock: prevState.availableQty === 0,
+      }));
+    });
+    this.props.onQtyUpdate(type);
   };
 
   componentDidMount() {
@@ -119,13 +93,16 @@ class ProductCard extends React.Component {
           <p className="category">{product.tags}</p>
         </div>
         <div className="cta">
-          <button disabled={this.state.qty === 0} onClick={this.onQtyDecrease}>
+          <button
+            disabled={this.state.qty === 0}
+            onClick={() => this.onQtyChange("DEC")}
+          >
             -
           </button>
           {this.state.qty}
           <button
             disabled={this.state.isOutOfStock}
-            onClick={this.onQtyIncrease}
+            onClick={() => this.onQtyChange("INC")}
           >
             +
           </button>
