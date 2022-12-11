@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./ProductCard.css";
 
 class ProductCard extends React.Component {
@@ -32,6 +33,11 @@ class ProductCard extends React.Component {
     });
     this.props.onQtyUpdate(type);
   };
+
+  onCardClick = () => {
+    console.log(this.props);
+    // console.log("Card clicked", this.props.product.id);
+  }
 
   componentDidMount() {
     // this.interval = setInterval(() => {
@@ -86,7 +92,11 @@ class ProductCard extends React.Component {
     // console.log(this.props.product);
     return (
       <div className="product-card">
-        <img src={product.image} alt="" />
+        <Link to={"/product-details/"+this.props.product.id}>
+        {/* <a target="_blank" href={"/product-details/"+this.props.product.id}> */}
+          <img src={product.image} alt="Product Img" />
+        {/* </a> */}
+        </Link>
         <div className="product-info">
           <h5 className="title">{product.title}</h5>
           <p className="price">Price Rs {product.price}</p>

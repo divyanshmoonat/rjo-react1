@@ -1,0 +1,8 @@
+.product-details-container {
+  display: flex;
+}
+
+.product-details-container img {
+  width: 40%;
+  margin: 31px;
+}

@@ -3,6 +3,7 @@ import axios from "axios";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
 import LoaderImage from "../../assets/images/loader.gif";
+import { CONSTANTS } from "../../utils/contsnts";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -32,12 +33,13 @@ class Home extends React.PureComponent {
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.setState({ showLoader: true });
     // fetch("https://fakestoreapi.com/products", { method: "GET" })
     //   .then((res) => res.json())
     //   .then((data) => console.log(data));
     axios
-      .get("https://fakestoreapi.com/products")
+      .get(CONSTANTS.API_BASE_URL + "products")
       .then((response) => {
         console.log(response.data);
         this.setState({

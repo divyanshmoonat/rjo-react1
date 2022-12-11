@@ -1,6 +1,8 @@
 import React from "react";
+import axios from 'axios';
 
 import "./Register.css";
+import { CONSTANTS } from "../../utils/contsnts";
 
 class Register extends React.Component {
   constructor() {
@@ -8,6 +10,7 @@ class Register extends React.Component {
     this.state = {
       fullName: "",
       email: "",
+      dob: "",
       password: "",
       confirmPassword: "",
     };
@@ -19,14 +22,30 @@ class Register extends React.Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
+    // Custom validations
+    // If validations pass, call the API else show errors
+    const registrationData = this.state;
+    axios.post(CONSTANTS.API_BASE_URL + 'users', registrationData)
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+          fullName: "",
+          email: "",
+          dob: "",
+          password: "",
+          confirmPassword: "",
+        })
+        alert("Regiration completed successfully, please login to continue");
+      })
+      .catch(err => console.log(err));
     // Call User Registraion REST API
-    console.log("Form submiited");
+    console.log("Form submiited", this.state);
   };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ fullName: "XYZ" });
-    }, 10000);
+    // setTimeout(() => {
+    //   this.setState({ fullName: "XYZ" });
+    // }, 10000);
   }
 
   render() {
@@ -46,7 +65,7 @@ class Register extends React.Component {
 
           <div>
             <label htmlFor="email">Email</label>
-            <input onChange={this.onInputChange} id="email" type="email" />
+            <input value={this.state.email} onChange={this.onInputChange} id="email" type="email" />
           </div>
 
           <div>
@@ -62,6 +81,7 @@ class Register extends React.Component {
           <div>
             <label htmlFor="password">Password</label>
             <input
+              value={this.state.password}
               onChange={this.onInputChange}
               id="password"
               type="password"
@@ -71,6 +91,7 @@ class Register extends React.Component {
           <div>
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
+              value={this.state.confirmPassword}
               onChange={this.onInputChange}
               id="confirmPassword"
               type="password"
