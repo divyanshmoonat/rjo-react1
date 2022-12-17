@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -7,153 +7,121 @@ import { CONSTANTS } from "../../utils/contsnts";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 
 import "./Home.scss";
 
-const carouselSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 1,
-  arrows: true,
-  autoplay: false,
-};
-class Home extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      currentProductIndex: 0,
-      productsList: [],
-      productLlistCopy: [],
-      cartItems: 0,
-      showLoader: false,
-    };
-  }
+const Home = () => {
+  const [state, setState] = useState({
+    currentProductIndex: 0,
+    productsList: [],
+    productLlistCopy: [],
+    cartItems: 0,
+    showLoader: false,
+  });
 
-  componentDidMount() {
-    console.log(this.props)
-    this.setState({ showLoader: true });
-    // fetch("https://fakestoreapi.com/products", { method: "GET" })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+  const [temp, setTemp] = useState(false);
+
+  useEffect(() => {
+    console.log("From use effect");
     axios
       .get(CONSTANTS.API_BASE_URL + "products")
       .then((response) => {
         console.log(response.data);
-        this.setState({
+        setState({
+          ...state,
           productsList: response.data,
           productLlistCopy: response.data,
           showLoader: false,
         });
+        setTimeout(() => {
+          setTemp(true);
+        }, 10000);
       })
       .catch((error) => {
-        this.setState({ showLoader: false });
+        setState({ ...state, showLoader: false });
         console.log(error);
         // alert(error.message);
       });
-    // setTimeout(() => {
-    //   console.log("Updating state value now");
-    //   this.setState({ cartItems: 0 });
-    // }, 10000);
-  }
+    return () => {
+      console.log("Home component unmounted");
+    };
+  }, []);
 
-  onPreviousClick = () => {
-    this.setState({ currentProductIndex: this.state.currentProductIndex - 1 });
-  };
+  useEffect(() => {
+    console.log("Use effect without dependency array");
+  });
 
-  onNextClick = () => {
-    this.setState({ currentProductIndex: this.state.currentProductIndex + 1 });
-  };
+  useEffect(() => {
+    console.log("The value of temp variable has changed");
+  }, [temp]);
 
-  onQtyUpdate = (operation) => {
-    if (operation === "INC") {
-      this.setState({ cartItems: this.state.cartItems + 1 });
-    } else if (operation === "DEC") {
-      this.setState({ cartItems: this.state.cartItems - 1 });
-    }
-  };
-
-  onSearchValueChange = (e) => {
+  const onSearchValueChange = (e) => {
     const searchKey = e.target.value;
     if (searchKey == "") {
-      this.setState({ productsList: this.state.productLlistCopy });
+      setState({ ...state, productsList: state.productLlistCopy });
       return;
     }
-    const filteredList = this.state.productsList.filter((product) =>
+    const filteredList = state.productsList.filter((product) =>
       product.title.toLowerCase().includes(searchKey.toLowerCase())
     );
-    this.setState({ productsList: filteredList });
+    setState({ ...state, productsList: filteredList });
   };
 
-  render() {
-    console.log("Hello from render method");
-    const productsList = this.state.productsList;
-    return (
-      <main className="home">
-        <section className="carousel-container">
-          {/* <Slider {...carouselSettings}>
-            {productsList.map((product) => {
-              return (
-                <ProductCard
-                  key={product.title}
-                  product={product}
-                  onQtyUpdate={this.onQtyUpdate}
-                />
-              );
-            })}
-            {productsList.map((product) => {
-              return (
-                <ProductCard
-                  key={product.title}
-                  product={product}
-                  onQtyUpdate={this.onQtyUpdate}
-                />
-              );
-            })}
-          </Slider> */}
-        </section>
-        <section className="cart">
-          Items in Cart : {this.state.cartItems}
-        </section>
-        <div>
-          <input
-            onChange={this.onSearchValueChange}
-            placeholder="Search with item name.."
-            className="search-box"
-            type="text"
-          />
+  const onPreviousClick = () => {
+    setState({
+      ...state,
+      currentProductIndex: state.currentProductIndex - 1,
+    });
+  };
+
+  const onNextClick = () => {
+    setState({ ...state, currentProductIndex: state.currentProductIndex + 1 });
+  };
+
+  const onQtyUpdate = (operation) => {
+    if (operation === "INC") {
+      setState({ ...state, cartItems: state.cartItems + 1 });
+    } else if (operation === "DEC") {
+      setState({ ...state, cartItems: state.cartItems - 1 });
+    }
+  };
+
+  return (
+    <main className="home">
+      <section className="carousel-container"></section>
+      <section className="cart">Items in Cart : {state.cartItems}</section>
+      <div>
+        <input
+          onChange={onSearchValueChange}
+          placeholder="Search with item name.."
+          className="search-box"
+          type="text"
+        />
+      </div>
+      <section>
+        <h2>Stationary</h2>
+        <button onClick={onPreviousClick}>Previous</button>
+        <button onClick={onNextClick}>Next</button>
+        <div className="products-container">
+          {state.showLoader && <img src={LoaderImage} alt="Loader" />}
+
+          {state.productsList.map((product) => {
+            return (
+              <ProductCard
+                key={product.title}
+                product={product}
+                onQtyUpdate={onQtyUpdate}
+              />
+            );
+          })}
         </div>
-        <section>
-          <h2>Stationary</h2>
-          <button onClick={this.onPreviousClick}>Previous</button>
-          <button onClick={this.onNextClick}>Next</button>
-          <div className="products-container">
-            {/* <ProductCard
-              product={productsList[this.state.currentProductIndex]}
-            /> */}
-            {this.state.showLoader && <img src={LoaderImage} alt="Loader" />}
+      </section>
 
-            {productsList.map((product) => {
-              return (
-                <ProductCard
-                  key={product.title}
-                  product={product}
-                  onQtyUpdate={this.onQtyUpdate}
-                />
-              );
-            })}
-          </div>
-        </section>
-
-        <section>
-          <h2>Electronics</h2>
-          {/* <ProductCard /> */}
-        </section>
-      </main>
-    );
-  }
-}
+      <section>
+        <h2>Electronics</h2>
+      </section>
+    </main>
+  );
+};
 
 export default Home;

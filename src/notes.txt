@@ -1,0 +1,32 @@
+Hook : 
+useState() : Acts as this.state in class based
+
+Syntax : 
+const [variableName, setMethod] = useState(<default-value>);
+const [qty, setQty] = useState(0);
+const [availableQty, setAvailableQty] = useState(5);
+const [outOfStock, setOutOfStock] = useState(false);
+
+setQty(5);
+
+
+
+Phases in Lifecycle :
+1. Mounting
+2. Update
+3. Unmounting
+
+
+useEffect() : This hook covers all phaes of react lifecycle
+
+useEffect(callBackFunction,dependency array);
+
+useEffect(callbackFn,[]) => componentDidMount
+
+useEffect(callbackFn) => componentDidUpdate
+
+useEffect(() => {
+    return () => {};
+},[]) => componentWillUnmount
+
+useEffect(callbackFn,[a,b]); => This will get called only when the value of a or b chnges

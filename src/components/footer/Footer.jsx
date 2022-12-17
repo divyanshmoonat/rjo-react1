@@ -1,14 +1,13 @@
-import React from 'react';
+import React from "react";
+import { useEffect } from "react";
 import "./Footer.css";
 
-class Footer extends React.Component {
-  constructor() {
-    super();
-  }
+const Footer = () => {
+  // useEffect(() => {
+  //   console.log("Use effect in Footer");
+  // }, []);
 
-  render() {
-    return <footer className='footer'>Copyright 2022</footer>;
-  }
-}
+  return <footer className="footer">Copyright 2022</footer>;
+};
 
 export default Footer;
