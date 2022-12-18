@@ -43,7 +43,8 @@ const App = (props) => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/product-details/:id" element={<ProductDetails />} />
+          {/* <Route path="/product-details/:id" element={<ProductDetails />} /> */}
+          <Route path="/product-details" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -30,3 +30,10 @@ useEffect(() => {
 },[]) => componentWillUnmount
 
 useEffect(callbackFn,[a,b]); => This will get called only when the value of a or b chnges
+
+
+Input 
+Controlled : Managed by React
+Uncontrolled : Managed by DOM
+
+Ref = Reference

@@ -1,56 +1,59 @@
-import axios from 'axios';
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, useLocation } from "react-router-dom";
 
-import { CONSTANTS } from '../../utils/contsnts';
+import { CONSTANTS } from "../../utils/contsnts";
 
-import './ProductDetails.css';
+import "./ProductDetails.css";
 
-class ProductDetails extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      productDetails: {}
-    };
-  }
+const ProductDetails = () => {
+  const [state, setState] = useState({
+    productDetails: {},
+  });
 
-  componentDidMount() {
-    let path = window.location.pathname;
-    path = path.split('/');
-    const productId = path[2];
-    axios.get(CONSTANTS.API_BASE_URL + 'products/' + productId)
-      .then(response => {
-        console.log(response.data)
-        this.setState({ productDetails: response.data });
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    // console.log(path[2]);
-  }
+  // const params = useParams();
+  // console.log(params)
+  const location = useLocation();
+  console.log(location);
 
-  render() {
-    const productDetails = this.state.productDetails;
-    return (
-      <div className='product-details-container'>
-        <img src={productDetails.image} alt='Prodcut Image' />
-        <div className='info'>
-          <h1>{productDetails.title}</h1>
-          <h3>{productDetails.category}</h3>
-          <p>{productDetails.description}</p>
-          {
-            productDetails.rating && (
-              <div>
-                <span>Ratigs : {productDetails.rating.rate}/5</span>
-                <br />
-                <span>Rated By : {productDetails.rating.count} users</span>
-              </div>
-            )
-          }
+  useEffect(() => {
+    setState({ ...state, productDetails: location.state });
+  }, []);
 
-        </div>
+  const searchParams = new URLSearchParams(location.search);
+
+  // useEffect(() => {
+  //   // const productId = params.id;
+  //   const productId = searchParams.get('productId');
+  //   axios
+  //     .get(CONSTANTS.API_BASE_URL + "products/" + productId)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setState({ ...state, productDetails: response.data });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   // console.log(path[2]);
+  // }, []);
+
+  return (
+    <div className="product-details-container">
+      <img src={state.productDetails.image} alt="Prodcut Image" />
+      <div className="info">
+        <h1>{state.productDetails.title}</h1>
+        <h3>{state.productDetails.category}</h3>
+        <p>{state.productDetails.description}</p>
+        {state.productDetails.rating && (
+          <div>
+            <span>Ratigs : {state.productDetails.rating.rate}/5</span>
+            <br />
+            <span>Rated By : {state.productDetails.rating.count} users</span>
+          </div>
+        )}
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
 
 export default ProductDetails;

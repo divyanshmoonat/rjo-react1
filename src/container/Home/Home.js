@@ -22,11 +22,12 @@ const Home = () => {
   const [temp, setTemp] = useState(false);
 
   useEffect(() => {
-    console.log("From use effect");
+    // console.log("From use effect");
+    setState({ ...state, showLoader: true });
     axios
       .get(CONSTANTS.API_BASE_URL + "products")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setState({
           ...state,
           productsList: response.data,
@@ -42,18 +43,18 @@ const Home = () => {
         console.log(error);
         // alert(error.message);
       });
-    return () => {
-      console.log("Home component unmounted");
-    };
+    // return () => {
+    //   console.log("Home component unmounted");
+    // };
   }, []);
 
-  useEffect(() => {
-    console.log("Use effect without dependency array");
-  });
+  // useEffect(() => {
+  //   console.log("Use effect without dependency array");
+  // });
 
-  useEffect(() => {
-    console.log("The value of temp variable has changed");
-  }, [temp]);
+  // useEffect(() => {
+  //   console.log("The value of temp variable has changed");
+  // }, [temp]);
 
   const onSearchValueChange = (e) => {
     const searchKey = e.target.value;
@@ -105,7 +106,7 @@ const Home = () => {
         <div className="products-container">
           {state.showLoader && <img src={LoaderImage} alt="Loader" />}
 
-          {state.productsList.map((product) => {
+          {state.productsList.slice(1, 2).map((product) => {
             return (
               <ProductCard
                 key={product.title}
