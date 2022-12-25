@@ -90,7 +90,7 @@ const Home = () => {
   return (
     <main className="home">
       <section className="carousel-container"></section>
-      <section className="cart">Items in Cart : {state.cartItems}</section>
+      {/* <section className="cart">Items in Cart : {state.cartItems}</section> */}
       <div>
         <input
           onChange={onSearchValueChange}
@@ -106,7 +106,7 @@ const Home = () => {
         <div className="products-container">
           {state.showLoader && <img src={LoaderImage} alt="Loader" />}
 
-          {state.productsList.slice(1, 2).map((product) => {
+          {state.productsList.map((product) => {
             return (
               <ProductCard
                 key={product.title}

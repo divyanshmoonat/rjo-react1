@@ -1,10 +1,32 @@
 .nav-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-bar a {
-    margin: 0px 10px;
+  margin: 0px 10px;
+}
+
+.cart-icon {
+  width: 26px;
+}
+
+.cart-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  width: 15px;
+  height: 15px;
+  background: yellow;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }

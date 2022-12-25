@@ -37,3 +37,39 @@ Controlled : Managed by React
 Uncontrolled : Managed by DOM
 
 Ref = Reference
+
+Home
+    Product Card
+        Buttons
+        Action Button
+    Product Details
+Product Listing Page
+
+
+State Managent : Create a signle state for the whole application.
+Context API
+
+Working Principle of Redux : 
+1. Updates can only be made using pure functions 
+2. State is read only.
+2. Aplication should have a single source of truth.
+
+Redux :
+1. Store  : Object which stores complete data of the application. (State of the application)
+2. Action : These are plain objects which helps in updating the redux state
+    2.1 type : Determines which type/key has to be updated in the state
+    2.2 payload : Actual data for the key which has to be updated
+    {type: "ADD_ITEM",payload:2}
+    {type: "SUBTRACT_ITEM", payload:2}
+3. Reducer: Pure function which has switch case in it (Business logic)
+
+Pre requisits : 
+    redux
+    react-redux
+    redux-toolkit
+    
+Header
+Home
+    Product Card
+
+Product Cart => Redux Store => Header

@@ -1,5 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { addItemsToCart, removeItemsFromCart } from "../../actions/cartActions";
+
 import "./ProductCard.scss";
 
 const ProductCard = (props) => {
@@ -7,10 +11,11 @@ const ProductCard = (props) => {
   // const [availableQty, setAvailableQty] = useState(5);
   // const [isOutOfStock, setOutOfStock] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     qty: 0,
-    availableQty: 1,
+    availableQty: 10,
     isOutOfStock: false,
     isItemInWishlist: false,
   });
@@ -23,9 +28,11 @@ const ProductCard = (props) => {
     if (type === "INC") {
       newQty++;
       newAvailableQty--;
+      dispatch(addItemsToCart());
     } else if (type === "DEC") {
       newQty--;
       newAvailableQty++;
+      dispatch(removeItemsFromCart());
     }
     setState({
       ...state,
@@ -46,7 +53,7 @@ const ProductCard = (props) => {
   };
 
   const isOutOfStock = useMemo(() => {
-    for (let i = 0; i < 1000000000; i++) {}
+    // for (let i = 0; i < 1000000000; i++) {}
     console.log("Determining the stock");
     return state.availableQty === 0;
   }, [state.availableQty]);
