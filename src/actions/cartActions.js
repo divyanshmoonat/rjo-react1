@@ -1,14 +1,11 @@
-export const addItemsToCart = () => {
-  console.log("Add items action creator called");
-  return {
-    type: "ADD_ITEM",
-    payload: 1,
-  };
-};
+import { ADD_ITEM, SUBTRACT_ITEM } from "../actionTypes/actionTypes";
 
-export const removeItemsFromCart = () => {
-  return {
-    type: "SUBTRACT_ITEM",
-    payload: 1,
-  };
-};
+export const addItemsToCart = (itemsCount = 1) => ({
+  type: ADD_ITEM,
+  payload: itemsCount,
+});
+
+export const removeItemsFromCart = (itemsCount = 1) => ({
+  type: SUBTRACT_ITEM,
+  payload: itemsCount,
+});

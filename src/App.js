@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory } from "history";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./container/Home/Home";
@@ -15,6 +15,7 @@ import AboutUs from "./container/AboutUs/AboutUs";
 import NotFound from "./container/NotFound/NotFound";
 import Register from "./container/Register/Register";
 import ProductDetails from "./container/ProductDetails/ProductDetails";
+import Login from "./container/Login/Login";
 
 const history = createBrowserHistory();
 
@@ -45,6 +46,7 @@ const App = (props) => {
           <Route path="/register" element={<Register />} />
           {/* <Route path="/product-details/:id" element={<ProductDetails />} /> */}
           <Route path="/product-details" element={<ProductDetails />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

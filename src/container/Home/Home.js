@@ -24,8 +24,13 @@ const Home = () => {
   useEffect(() => {
     // console.log("From use effect");
     setState({ ...state, showLoader: true });
+    const token = localStorage.getItem("token");
     axios
-      .get(CONSTANTS.API_BASE_URL + "products")
+      .get(CONSTANTS.API_BASE_URL + "products", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
       .then((response) => {
         // console.log(response.data);
         setState({

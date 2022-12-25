@@ -6,8 +6,9 @@ import "./Header.css";
 
 const Header = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
 
-  console.log(cart);
+  console.log(user);
 
   return (
     <header>
@@ -32,8 +33,14 @@ const Header = () => {
             />
             <span className="cart-count">{cart.itemsCount}</span>
           </div>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          {user.isLoggedIn ? (
+            <span>Welcome, {user.userData.user}</span>
+          ) : (
+            <div>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </div>
+          )}
           {/* <a>Login</a> */}
         </div>
       </nav>

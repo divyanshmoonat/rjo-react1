@@ -73,3 +73,5 @@ Home
     Product Card
 
 Product Cart => Redux Store => Header
+
+Action Creator => Middleware (Convert any input to plain object) => Dispatches an action (plain object)
