@@ -44,7 +44,7 @@ const ProductCard = (props) => {
   };
 
   const onProductClick = () => {
-    console.log("Product clicked", props.product.id);
+    // console.log("Product clicked", props.product.id);
     // navigate("/product-details/" + props.product.id);
     // navigate(-1);
     navigate("/product-details?productId=" + props.product.id, {
@@ -54,7 +54,7 @@ const ProductCard = (props) => {
 
   const isOutOfStock = useMemo(() => {
     // for (let i = 0; i < 1000000000; i++) {}
-    console.log("Determining the stock");
+    // console.log("Determining the stock");
     return state.availableQty === 0;
   }, [state.availableQty]);
 

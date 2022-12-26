@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
+    "env-cmd": "^10.1.0",
     "history": "^5.3.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
@@ -17,6 +18,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.2",
     "sass": "^1.56.2",
     "slick-carousel": "^1.8.1",
@@ -24,7 +26,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:dev": "env-cmd -f config/.env.dev react-scripts build",
+    "build:stg": "env-cmd -f config/.env.stg react-scripts build",
+    "build:prod": "env-cmd -f config/.env.prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

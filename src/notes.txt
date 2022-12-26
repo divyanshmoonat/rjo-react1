@@ -75,3 +75,15 @@ Home
 Product Cart => Redux Store => Header
 
 Action Creator => Middleware (Convert any input to plain object) => Dispatches an action (plain object)
+
+
+Axios Request => (Intercepted the request) - Add JWT to header => Network
+Building Process:
+1. Convert JSX into plain JS
+2. Minification
+3. Uglification
+
+
+Deployment Cycle
+
+Dev local system => Dev server => Stg/SIT/QA/Test => Production Env

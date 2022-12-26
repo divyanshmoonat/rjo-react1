@@ -11,7 +11,7 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  console.log("USER REDUCER", action);
+  // console.log("USER REDUCER", action);
   switch (action.type) {
     case USER_LOGIN_SUCCESSFUL:
       return {

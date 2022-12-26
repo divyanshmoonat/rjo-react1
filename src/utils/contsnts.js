@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-  API_BASE_URL: 'https://fakestoreapi.com/'
+  API_BASE_URL: process.env.REACT_APP_API_BASE_URL,
 };
 
 // export default CONSTANTS;

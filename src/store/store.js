@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 import cartReducer from "../reducers/cartReducer";
 import userReducer from "../reducers/userReducer";
@@ -7,8 +8,7 @@ import userReducer from "../reducers/userReducer";
 export default configureStore({
   reducer: {
     cart: cartReducer,
-    user
-    : userReducer,
+    user: userReducer,
   },
-  middleware: [thunk],
+  middleware: [thunk, logger],
 });

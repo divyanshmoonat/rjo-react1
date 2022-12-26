@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../utils/axios";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
 import LoaderImage from "../../assets/images/loader.gif";
@@ -24,13 +24,8 @@ const Home = () => {
   useEffect(() => {
     // console.log("From use effect");
     setState({ ...state, showLoader: true });
-    const token = localStorage.getItem("token");
     axios
-      .get(CONSTANTS.API_BASE_URL + "products", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+      .get(CONSTANTS.API_BASE_URL + "products")
       .then((response) => {
         // console.log(response.data);
         setState({
