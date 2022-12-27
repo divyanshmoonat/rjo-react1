@@ -87,3 +87,11 @@ Building Process:
 Deployment Cycle
 
 Dev local system => Dev server => Stg/SIT/QA/Test => Production Env
+
+
+
+reCaptcha => I'm not a robot => Token => Call your API and pass the token => From your server call reCaptcha validate API with secret key => If API returns success, then validation is successful  
+
+Encryption Mechanisms : 
+ Symmetric Encryption
+ Asymetric Encryption

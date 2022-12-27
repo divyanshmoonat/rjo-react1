@@ -19,6 +19,9 @@ const Register = () => {
 
   const fullNameRef = useRef(null);
 
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const onInputChange = (e) => {
     setState({ ...state, [e.target.id]: e.target.value });
   };
@@ -30,6 +33,14 @@ const Register = () => {
     if (data.fullName.length === 0 || data.fullName.length > 20) {
       errors.fullName = "Full name  should be between 1 to 20 characters";
     }
+
+    if (!emailRegex.test(data.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    if (data.email.length === 0) {
+      errors.email = "Email field is required";
+    }
+
     if (data.password.length < 8) {
       errors.password = "Password should contain minimum 8 character";
     }
@@ -46,12 +57,16 @@ const Register = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log(fullNameRef.current.value);
+    // console.log(fullNameRef.current.value);
     // Custom validations
     // If validations pass, call the API else show errors
     const hasErrors = validateRegistrationForm(state);
     if (!hasErrors) {
-      const registrationData = state;
+      // const registrationData = state;
+      const registrationData = new FormData();
+      registrationData.append("fullName", state.fullName);
+      registrationData.append("picture", state.picture);
+      registrationData.append("email", state.email);
       axios
         .post(CONSTANTS.API_BASE_URL + "users", registrationData)
         .then((response) => {
@@ -72,6 +87,18 @@ const Register = () => {
     }
   };
 
+  const onFileInput = (e) => {
+    console.log(e.target.files);
+    const file = e.target.files[0];
+    setState({ ...state, picture: file });
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = () => {
+    //   console.log(reader.result); // Base64 encoded string of file
+    //   setState({ ...state, picture: reader.result });
+    // };
+  };
+
   return (
     <div className="registration-container">
       <h2>Register Here</h2>
@@ -79,9 +106,9 @@ const Register = () => {
         <div>
           <label htmlFor="fullName">Full Name</label>
           <input
-            ref={fullNameRef}
-            // value={state.fullName}
-            // onChange={onInputChange}
+            // ref={fullNameRef}
+            value={state.fullName}
+            onChange={onInputChange}
             id="fullName"
             type="text"
           />
@@ -95,10 +122,12 @@ const Register = () => {
             value={state.email}
             onChange={onInputChange}
             id="email"
-            type="email"
+            // type="email"
           />
         </div>
-
+        {state.errors.errorMsgs.email && (
+          <span className="error-span">{state.errors.errorMsgs.email}</span>
+        )}
         <div>
           <label htmlFor="dob">DOB</label>
           <input
@@ -131,6 +160,16 @@ const Register = () => {
             onChange={onInputChange}
             id="confirmPassword"
             type="password"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="picture">Upload Picture</label>
+          <input
+            // value={state.confirmPassword}
+            onChange={onFileInput}
+            id="picture"
+            type="file"
           />
         </div>
 
