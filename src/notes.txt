@@ -117,3 +117,19 @@ Hooks (useEffect, useMemo, useCallback, useState) their lifecycle eqiuvalents
 React portal
 CSS Implementation (Advantages of SASS)
 UI Libraries (Materi UI, Ant Design)
+
+
+
+
+Git is a code storage service
+Github, Gitlab, Bitbucket, Azure DevOps etc
+Create a repo
+Create branches
+
+https://github.com/divyanshmoonat/demorepo-public.git
+git@github.com:divyanshmoonat/demorepo-public.git
+
+
+1. Add the file
+2. Write the commit message
+3. Push the file

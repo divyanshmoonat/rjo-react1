@@ -21,6 +21,32 @@ const Home = () => {
 
   const [temp, setTemp] = useState(false);
 
+  // const p = new Promise((res, rej) => {
+  //   setTimeout(res, 5000);
+  // });
+
+  // async function test() {
+  //   try {
+  //     const res = await p;
+  //     const res2 = await q;
+  //     const res3 = await r;
+
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // function test() {
+  //   p.then((res) => {
+  //     Q.then((res) => {
+  //       r.then((res) => {
+  //         console.log(res);
+  //       }).then((err) => console.log(err));
+  //     }).then((err) => console.log(err));
+  //   }).catch((err) => console.log(err));
+  // }
+
   useEffect(() => {
     // console.log("From use effect");
     setState({ ...state, showLoader: true });

@@ -10,26 +10,47 @@ import { CONSTANTS } from "../utils/contsnts";
 
 export const loginUser = (input) => {
   // Dispatch an action to show loader
-  return function (dispatch) {
-    axios
-      .post(`${CONSTANTS.API_BASE_URL}auth/login`, input)
-      .then((res) => {
-        console.log(res.data);
-        const tokenData = jwtDecode(res.data.token);
-        localStorage.setItem("token", res.data.token);
-        // Dispatch an action to hide loader
-        dispatch({
-          type: SET_USER_DATA,
-          payload: tokenData,
-        });
-        dispatch({
-          type: USER_LOGIN_SUCCESSFUL,
-          payload: true,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  return async function (dispatch) {
+    try {
+      const res = await axios.post(
+        `${CONSTANTS.API_BASE_URL}auth/login`,
+        input
+      );
+      console.log(res.data);
+      const tokenData = jwtDecode(res.data.token);
+      localStorage.setItem("token", res.data.token);
+      // Dispatch an action to hide loader
+      dispatch({
+        type: SET_USER_DATA,
+        payload: tokenData,
       });
+      dispatch({
+        type: USER_LOGIN_SUCCESSFUL,
+        payload: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    // axios
+    //   .post(`${CONSTANTS.API_BASE_URL}auth/login`, input)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     const tokenData = jwtDecode(res.data.token);
+    //     localStorage.setItem("token", res.data.token);
+    //     // Dispatch an action to hide loader
+    //     dispatch({
+    //       type: SET_USER_DATA,
+    //       payload: tokenData,
+    //     });
+    //     dispatch({
+    //       type: USER_LOGIN_SUCCESSFUL,
+    //       payload: true,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 };
 

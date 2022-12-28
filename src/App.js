@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import Header from "./components/header/Header";
+// import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./container/Home/Home";
 import ContactUs from "./container/ContactUs/ContactUs";
@@ -16,11 +16,14 @@ import NotFound from "./container/NotFound/NotFound";
 import Register from "./container/Register/Register";
 import ProductDetails from "./container/ProductDetails/ProductDetails";
 import Login from "./container/Login/Login";
+import React, { Suspense } from "react";
+const Header = React.lazy(() => import("./components/header/Header"));
+// const ContactUs = React.lazy(() => import("./container/ContactUs/ContactUs"));
 
 const history = createBrowserHistory();
 
 // const router = createBrowserRouter([
-//   {
+  //   {
 //     path: "/",
 //     element: <Home />,
 //   },
@@ -39,16 +42,18 @@ const App = (props) => {
     <div className="App">
       <BrowserRouter history={history}>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/register" element={<Register />} />
-          {/* <Route path="/product-details/:id" element={<ProductDetails />} /> */}
-          <Route path="/product-details" element={<ProductDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<h1>Loading....</h1>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="/product-details/:id" element={<ProductDetails />} /> */}
+            <Route path="/product-details" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
         <Footer />
       </BrowserRouter>
       {/* <RouterProvider router={router} /> */}
