@@ -95,3 +95,25 @@ reCaptcha => I'm not a robot => Token => Call your API and pass the token => Fro
 Encryption Mechanisms : 
  Symmetric Encryption
  Asymetric Encryption
+
+
+Interview Key Questions :
+
+State vs Props?
+Controlled vs uncontrolled components? (Less frequently asked)
+Virtual DOM (Reconsiliation Process)
+Updations of object (Reference Chaining)
+Shallow copy vs deep copy
+Rest and spread operator
+Hoisting, Closures, async and await
+
+Workflow of redux?
+Code for small applications 
+    e.g Auto suggest dropdown
+        Write your debouncer
+        Pass data from parent-child and vice versa
+Authentication (JWT, Refresh Token, Passing token as auth)
+Hooks (useEffect, useMemo, useCallback, useState) their lifecycle eqiuvalents
+React portal
+CSS Implementation (Advantages of SASS)
+UI Libraries (Materi UI, Ant Design)
