@@ -1,0 +1,43 @@
+const bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const Schema = mongoose.Schema;
+
+mongoose
+  .connect("mongodb://localhost:27017/todos")
+  .then(() => console.log("mongo connected"))
+  .catch((err) => console.error(err));
+
+const todo = new Schema({
+  title: String,
+  completed: Boolean,
+});
+
+const TodoModel = mongoose.model("todo", todo);
+
+app.use(bodyParser.json());
+app.use(
+  cors({
+    allowedHeaders: "*",
+    origin: "*",
+  })
+);
+
+app.get("/todo", async (req, res) => {
+  const todos = await TodoModel.find({}, { __v: 0 });
+  return res.json({ todos });
+});
+
+app.post("/todo", async (req, res) => {
+  console.log(req.body);
+  const todo = await TodoModel.insertMany([req.body]);
+  console.log(todo[0]._id);
+  res
+    .status(201)
+    .json({ message: "ToDo successfully created", id: todo[0]._id });
+});
+
+app.listen(5000, () => console.log("listening on 5000"));
