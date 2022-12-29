@@ -2,6 +2,13 @@ import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+
 import { addItemsToCart, removeItemsFromCart } from "../../actions/cartActions";
 
 import "./ProductCard.scss";
@@ -63,38 +70,28 @@ const ProductCard = (props) => {
   };
 
   return (
-    <div className="product-card">
-      <div onClick={onProductClick}>
-        {/* <Link to={"/product-details/" + props.product.id}> */}
-        <img src={product.image} alt="Product Img" />
-        {/* </Link> */}
-        <div className="product-info">
-          <h5 className="title">{product.title}</h5>
-          <p className="price">Price Rs {product.price}</p>
-          <p className="category">{product.tags}</p>
-        </div>
-      </div>
-
-      <div className="cta">
-        <button disabled={state.qty === 0} onClick={() => onQtyChange("DEC")}>
-          -
-        </button>
-        {state.qty}
-        <button
-          disabled={state.isOutOfStock}
-          onClick={() => onQtyChange("INC")}
-        >
-          +
-        </button>
-      </div>
-      {isOutOfStock && <span className="ooo">Out of Stock</span>}
-
-      <button onClick={onWishlistClick}>
-        {state.isItemInWishlist ? "Remove" : "Add"} to whishlist
-      </button>
-      <br />
-      {state.isItemInWishlist && <span>Item added to wishlist</span>}
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        sx={{ height: 140 }}
+        image={product.image}
+        title="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {product.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {product.tags}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {product.price}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
   );
 };
 
